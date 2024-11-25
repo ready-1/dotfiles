@@ -13,3 +13,7 @@ function extract {
         *) echo "Unknown file type: $1" ;;
     esac
 }
+
+function lsl() {
+    ls -la "$@" | less
+}

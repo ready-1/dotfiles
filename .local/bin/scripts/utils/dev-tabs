@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+
+import socket
+import iterm2
+import asyncio
+
+hostname = socket.gethostname()
+
+
+async def wait_for_output(session, keyword, timeout=60):
+    """
+    Wait for a specific keyword to appear in the session's output.
+    """
+    print(f"Waiting for '{keyword}' in session output...")
+    for _ in range(timeout):
+        print(".", end="", flush=True)
+        try:
+            # Fetch the visible content of the session's screen
+            screen_contents = await session.async_get_screen_contents()
+            # Iterate over each line in the screen contents
+            for line_number in range(screen_contents.number_of_lines):
+                line = screen_contents.line(line_number).string
+                if keyword in line:
+                    print(f"Found keyword '{keyword}' in session output.")
+                    return True
+        except Exception as e:
+            print(f"Error fetching session output: {e}")
+        await asyncio.sleep(1)
+    print(f"Timeout reached while waiting for '{keyword}'.")
+    return False
+
+
+async def main(connection):
+    app = await iterm2.async_get_app(connection)
+    window = app.current_terminal_window
+
+    if window is None:
+        window = await app.async_create_window()
+
+    current_tab = window.current_tab
+    await current_tab.async_set_title("Local Shell")
+
+    tab1 = await window.async_create_tab()
+    session1 = tab1.current_session
+    await tab1.async_set_title("Docker Containers")
+    await session1.async_send_text("ssh bob@devsrvr\n")
+    await asyncio.sleep(1)
+    await session1.async_send_text("cd /srv/NetCtrl\n")
+    await session1.async_send_text("docker compose up --build\n")
+
+    keyword = "Starting development server at http://0.0.0.0:8000/"
+    is_ready = await wait_for_output(session1, keyword)
+    if not is_ready:
+        print("Error: Server did not start within the timeout period.")
+        await current_tab.async_send_text("echo 'Server did not start within the timeout period.'\n")
+        return
+    print("Docker containers have been set up successfully.")
+
+    tab2 = await window.async_create_tab()
+    session2 = tab2.current_session
+    await tab2.async_set_title("Web Container")
+    await session2.async_send_text("ssh bob@devsrvr\n")
+    await asyncio.sleep(1)
+    await session2.async_send_text("cd /srv/NetCtrl\n")
+    await session2.async_send_text("docker exec -it web bash\n")
+    await asyncio.sleep(1)
+    await session2.async_send_text("poetry shell\n")
+    await session2.async_send_text("cd /srv/NetCtrl\n")
+    print("Web container session has been set up successfully.")
+
+    # Tab 3: SSH to Dev Server (commented out)
+    tab3 = await window.async_create_tab()
+    session3 = tab3.current_session
+    await tab3.async_set_title("Dev Server")
+    await session3.async_send_text("ssh bob@devsrvr\n")
+    await asyncio.sleep(1)
+    await session3.async_send_text("cd /srv/NetCtrl\n")
+    print("SSH session to Dev Server has been set up successfully.")
+
+    await current_tab.async_activate()
+
+    print("\nAll iTerm2 tabs have been set up successfully.")
+    print(f"This tab is now running on {hostname}.")
+
+iterm2.run_until_complete(main)

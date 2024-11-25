@@ -6,6 +6,12 @@
 :set smarttab
 :set softtabstop=4
 :set mouse=a
+:set expandtab
+:set cursorline
+:set ignorecase
+:set smartcase
+:set wrap
+
 
 call plug#begin()
 
@@ -20,6 +26,11 @@ Plug 'https://github.com/ryanoasis/vim-devicons' " Developer Icons
 Plug 'https://github.com/tc50cal/vim-terminal' " Vim Terminal
 Plug 'https://github.com/preservim/tagbar' " Tagbar for code navigation
 Plug 'https://github.com/terryma/vim-multiple-cursors' " CTRL + N for multiple cursors
+Plug 'junegunn/vim-easy-align'         " Alignment plugin
+Plug 'airblade/vim-gitgutter'          " Git integration
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " Code completion
+
+" Themes
 Plug 'morhetz/gruvbox'
 Plug 'projekt0n/github-nvim-theme'
 
@@ -65,5 +76,22 @@ let g:airline_symbols.linenr = ''
 
 inoremap <expr> <Tab> pumvisible() ? coc#_select_confirm() : "<Tab>"
 
-:colorscheme gruvbox
+" Set Color Scheme  https://github.com/projekt0n/github-nvim-theme
+:colorscheme github_dark
+
+" Enable syntax highlighting
+syntax on
+
+" Use system clipboard
+set clipboard=unnamedplus
+
+" Set leader key
+let mapleader=" "
+
+" NERDTree settings
+nnoremap <leader>n :NERDTreeToggle<CR> " Toggle NERDTree with <leader>n
+
+" Tab for autocomplete
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
