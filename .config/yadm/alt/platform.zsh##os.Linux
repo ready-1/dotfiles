@@ -1,0 +1,6 @@
+# ~/.zsh/platform.zsh##os.Linux
+# Linux-specific settings
+
+export PATH="/usr/bin:$PATH"
+alias ls="ls --color=auto"
+
