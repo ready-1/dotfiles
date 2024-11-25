@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<map name="AssignmentPanels">
+		<value name="InfoPopupVisible">false</value>
+	</map>
+	<map name="Backup">
+		<value name="Version">4.30.162</value>
+	</map>
+	<map name="CommonSettings">
+		<value name="DemoDeviceModeEnabled">false</value>
+	</map>
+	<map name="DataCollectionSettings">
+		<value name="dataConsent">true</value>
+		<value name="first_appearance_at">2022-01-09T18:44:28.246Z</value>
+		<value name="first_icue_ver">4.19.191</value>
+		<value name="iCueSettingsEventSent">true</value>
+		<value name="inited">true</value>
+		<value name="machine_id">8e44c49745211f55d2dae17796305ccf</value>
+		<value name="previous_close_timestamp">1674676948153</value>
+		<value name="session_ended">false</value>
+		<value name="total_icue_starts">19</value>
+		<value name="total_time_used">3379177419</value>
+		<value name="user_id">3885c0be1cf81ba6deff7003edd4b4c6113a2dd8050abf87a6b84e9d2b1686d6</value>
+	</map>
+	<map name="DeviceListWatcher">
+		<map name="device_list">
+			<map name="1">
+				<value name="device_id">538243154ae961cffca94b336a001770</value>
+				<value name="device_type">2</value>
+				<value name="is_connected">true</value>
+				<value name="is_corsair">true</value>
+				<value name="last_appearance">2022-11-11T19:57:52.934</value>
+				<value name="model_name">M65 RGB ULTRA Wireless</value>
+				<value name="pid">0</value>
+				<value name="serial_number">14911DA9329742C6</value>
+				<value name="vid">0</value>
+			</map>
+			<value name="size">1</value>
+		</map>
+		<value name="device_list_saved_correctly">false</value>
+	</map>
+	<map name="DeviceTutorialSteps">
+		<value name="MouseGestures">None</value>
+		<value name="MouseKeyAssignments">None</value>
+		<value name="MouseLightings">None</value>
+	</map>
+	<map name="DeviceTutorials">
+		<value name="MouseGestures">6</value>
+		<value name="MouseKeyAssignments">6</value>
+		<value name="MouseLightings">6</value>
+	</map>
+	<map name="Devices">
+		<map name="M65 RGB ULTRA Wireless">
+			<map name="{e5f3862c-1439-464a-8ea4-3d412ca58152}">
+				<value name="BrightnessLevel">50</value>
+				<value name="DeviceName">M65 RGB ULTRA Wireless</value>
+				<value name="FirstDetected">2022-01-09T18:44:26.443Z</value>
+				<binary name="Layout">%00%00%04%00%00%00%00%00%1Ccue%3A%3Aglobal%3A%3AKeyboardLayout%00%00%00%00%02%001</binary>
+				<binary name="LedChannelCounts">%00%00%04%00%00%00%00%00%0DQVector%3Cint%3E%00%00%00%00%00</binary>
+				<binary name="LedChannelExtensionsTypes">%00%00%04%00%00%00%00%006QVector%3CQVector%3Ccue%3A%3Adev%3A%3Amanifest%3A%3ALedChannelType%3E%20%3E%00%00%00%00%01%00%00%00%00</binary>
+				<binary name="LedChannelSynchronizations">%00%00%04%00%00%00%00%00%0EQVector%3Cbool%3E%00%00%00%00%00</binary>
+				<binary name="LedChannelTypeCombinations">%00%00%04%00%00%00%00%006QVector%3CQVector%3Ccue%3A%3Adev%3A%3Amanifest%3A%3ALedChannelType%3E%20%3E%00%00%00%00%00</binary>
+				<binary name="LedChannelTypes">%00%00%04%00%00%00%00%00%2CQVector%3Ccue%3A%3Adev%3A%3Amanifest%3A%3ALedChannelType%3E%00%00%00%00%01%00%00%00%0CNotConnected</binary>
+				<value name="LiftHeightLevel">Low</value>
+				<value name="LightingMode">Software</value>
+				<value name="PowerSaveModeEnabled">false</value>
+				<value name="SleepModeEnabled">true</value>
+				<value name="SleepModeWaitDelaySec">900</value>
+				<value name="TaskbarBatteryIconEnabled">true</value>
+				<value name="UniqueDeviceId">{bcc304ea-e6ce-4f81-bdbf-f51e51076f7e}</value>
+				<value name="UniqueDongleId">{7576891b-ca0b-422d-98ac-2d8067edb423}</value>
+			</map>
+		</map>
+		<map name="SLIPSTREAM WIRELESS DONGLE">
+			<map name="{8ff8d643-33a6-4f31-9986-ca0de9fd4d2a}">
+				<value name="DeviceName">SLIPSTREAM WIRELESS USB Receiver</value>
+				<value name="FirstDetected">2022-04-15T14:02:30.552Z</value>
+				<binary name="Layout">%00%00%04%00%00%00%00%00%1Ccue%3A%3Aglobal%3A%3AKeyboardLayout%00%00%00%00%02%001</binary>
+				<binary name="LedChannelCounts">%00%00%04%00%00%00%00%00%0DQVector%3Cint%3E%00%00%00%00%00</binary>
+				<binary name="LedChannelExtensionsTypes">%00%00%04%00%00%00%00%006QVector%3CQVector%3Ccue%3A%3Adev%3A%3Amanifest%3A%3ALedChannelType%3E%20%3E%00%00%00%00%01%00%00%00%00</binary>
+				<binary name="LedChannelSynchronizations">%00%00%04%00%00%00%00%00%0EQVector%3Cbool%3E%00%00%00%00%00</binary>
+				<binary name="LedChannelTypeCombinations">%00%00%04%00%00%00%00%006QVector%3CQVector%3Ccue%3A%3Adev%3A%3Amanifest%3A%3ALedChannelType%3E%20%3E%00%00%00%00%00</binary>
+				<binary name="LedChannelTypes">%00%00%04%00%00%00%00%00%2CQVector%3Ccue%3A%3Adev%3A%3Amanifest%3A%3ALedChannelType%3E%00%00%00%00%01%00%00%00%0CNotConnected</binary>
+				<value name="LightingMode">Software</value>
+				<value name="UniqueDeviceId">{47b89458-41d4-4aa5-8e11-68277932a9b2}</value>
+			</map>
+		</map>
+		<binary name="UniqueDeviceIds">%00%00%04%00%00%00%00%005QHash%3CQUuid%2CUniqueDeviceIdStorage%3A%3AUniqueDeviceData%3E%00%00%00%00%02%E5%F3%86%2C%149FJ%8E%A4%3DA%2C%A5%81R%00%00%1B%1C%00%00%1B%B5%00%00%00%20%001%004%009%001%001%00D%00A%009%003%002%009%007%004%002%00C%006%00%00%00%08%A6%A2%13%F6%C8%2C%FAY%8F%F8%D6C3%A6O1%99%86%CA%0D%E9%FDM%2A%00%00%1B%1C%00%00%1B%A6%00%00%00%20%009%00A%004%006%004%002%007%00C%00A%00C%00D%009%00E%009%00D%002%00%00%00%08%A6%A2%13%F6%C8%2C%FAY</binary>
+	</map>
+	<map name="HWPInfoPopup">
+		<value name="InfoPopupVisible">false</value>
+	</map>
+	<value name="Language">en</value>
+	<value name="LastDataCollectionConsentAppVersion">4.30.162</value>
+	<map name="LastDir">
+		<value name="ProfileProgramLink">/Applications</value>
+	</map>
+	<value name="LastLoadedAppVersion">4.30.162</value>
+	<map name="LedQuickSelection">
+		<map name="Default">
+			<map name="{e5f3862c-1439-464a-8ea4-3d412ca58152}">
+				<map name="0">
+					<map name="NotConnected">
+						<map name="hardware">
+							<map name="NotConnected">
+								<map name="active">
+									<map name="0">
+										<map name="custom">
+											<binary name="id">%00%00%00%09%00%00%00%00%00</binary>
+										</map>
+										<map name="default">
+											<binary name="id">%00%00%00%09%00%00%00%00%01%00%00%00%02%00%00%00%00%00</binary>
+										</map>
+									</map>
+								</map>
+							</map>
+						</map>
+						<map name="software">
+							<map name="NotConnected">
+								<map name="active">
+									<map name="0">
+										<map name="custom">
+											<binary name="id">%00%00%00%09%00%00%00%00%00</binary>
+										</map>
+										<map name="default">
+											<binary name="id">%00%00%00%09%00%00%00%00%01%00%00%00%02%00%00%00%00%00</binary>
+										</map>
+									</map>
+								</map>
+							</map>
+						</map>
+					</map>
+				</map>
+			</map>
+		</map>
+	</map>
+	<map name="LightingLibraryStorage">
+		<value name="version">401</value>
+	</map>
+	<map name="Lightings">
+		<map name="Instant">
+			<value name="Enabled">false</value>
+		</map>
+	</map>
+	<map name="Privacy">
+		<value name="DataCollectionConsent">true</value>
+		<value name="DataCollectionConsentTimestamp">11 Nov 2022 20:00:15 -0600</value>
+	</map>
+	<map name="Profiles">
+		<binary name="StoredToDevice">%00%00%00%09%00%00%00%00%01%00%00%00%1E%00%1B%B5%00%00%00%10%00%00%00%00%00%00%00%00%00%00</binary>
+	</map>
+	<map name="QQControlsFileDialog">
+		<binary name="favoriteFolders">%00%00%00%09%00%00%00%00%00</binary>
+		<value name="height">0</value>
+		<value name="sidebarSplit">139.5</value>
+		<value name="sidebarVisible">true</value>
+		<value name="sidebarWidth">80</value>
+		<value name="width">0</value>
+	</map>
+	<map name="Scenes">
+		<value name="DefaultScenesInitialized">true</value>
+	</map>
+	<map name="Storage Locations">
+		<value name="-Users-bob-Library-Application Support-Corsair-CUE4-dpi-dpi.cuelibrary">true</value>
+	</map>
+	<map name="SwUpdate">
+		<value name="LastCheckDate">2023-02-11</value>
+	</map>
+	<map name="TutorialStates">
+		<value name="MouseLightings">Skipped</value>
+	</map>
+	<map name="Update">
+		<value name="UpdateCount">4</value>
+	</map>
+	<value name="defaultProfile">{6cd71b5b-3931-40b3-b349-10604b36d69e}</value>
+	<value name="skipLandingPage">false</value>
+</config>
