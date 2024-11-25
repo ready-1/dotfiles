@@ -1,0 +1,35 @@
+# Ignore everything by default
+*
+
+!.gitignore
+
+# Include ZSH-related files and directories
+!.zsh/
+!.zsh/**
+!.zshrc
+
+# Include .config directory and its subdirectories
+!.config/
+!.config/**
+
+# Include .local/bin directory and scripts
+!.local/
+!.local/bin/
+!.local/bin/**
+
+# Include .secrets for sensitive env vars (managed via encryption)
+!.secrets
+
+# Include .env for non-sensitve env vars
+!.env
+
+# Exclude temporary files and caches
+*.tmp
+.cache/
+.history
+
+# Exclude system files
+.DS_Store
+.Trash/
+.AppleDouble/
+
