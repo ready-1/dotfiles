@@ -1,1 +1,0 @@
-.config/yadm/alt/.zshrc##os.Darwin
