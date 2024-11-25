@@ -1,1 +1,4 @@
-env.zsh
+# use relative paths from the yadm repo root path
+
+
+.zsh/env.zsh
