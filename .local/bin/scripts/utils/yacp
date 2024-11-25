@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Ensure a commit message is provided
+if [ -z "$1" ]; then
+  echo "Usage: $0 <commit-message>"
+  exit 1
+fi
+
+# Set the commit message
+COMMIT_MESSAGE="$1"
+
+# Add all new and modified files to yadm
+yadm add --all
+
+# Commit the changes with the provided message
+yadm commit -m "$COMMIT_MESSAGE"
+
+# Push to the remote repository
+yadm push
+
+# Confirm completion
+echo "All changes have been committed and pushed with message: '$COMMIT_MESSAGE'"

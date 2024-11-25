@@ -1,0 +1,86 @@
+#!/bin/bash
+
+# Define the Tailscale CLI path
+TAILSCALE_CLI="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+ 
+clear
+
+echo "====== Active Network Connections Summary ======"
+
+# Get all network services with their hardware ports
+network_services=$(networksetup -listallhardwareports | awk -F': ' '/Hardware Port/{port=$2}/Device/{print port "|" $2}')
+
+# Loop through each network service
+IFS=$'\n'
+for service in $network_services; do
+  adapter_name=$(echo "$service" | awk -F'|' '{print $1}')
+  adapter_device=$(echo "$service" | awk -F'|' '{print $2}')
+  
+  # Check if the adapter has a valid IPv4 address
+  ipv4=$(ifconfig "$adapter_device" 2>/dev/null | grep -Eo 'inet [0-9\.]+' | awk '{print $2}')
+  if [ -z "$ipv4" ]; then
+    # Skip non-active adapters with no valid IPv4 address
+    continue
+  fi
+
+  # Display details for active adapters
+  echo "----------------------------------------"
+  echo "Adapter Name: $adapter_name"
+  echo "Device: $adapter_device"
+  echo "Status: Active"
+  echo "IPv4 Address: $ipv4"
+
+  # Get Subnet Mask
+  subnet=$(ifconfig "$adapter_device" | grep 'inet ' | awk '{print $4}')
+  echo "Subnet Mask: ${subnet:-N/A}"
+
+  # Get Router/Gateway
+  router=$(netstat -rn | grep "^default" | grep "$adapter_device" | awk '{print $2}')
+  echo "Router: ${router:-N/A}"
+
+  # Get DNS Servers
+  dns=$(networksetup -getdnsservers "$adapter_name" 2>/dev/null)
+  if [[ $dns == "There aren't any DNS Servers set on"* ]]; then
+    echo "DNS Servers: Default"
+  else
+    echo "DNS Servers: $dns"
+  fi
+
+  # Get Hostname
+  hostname=$(scutil --get LocalHostName 2>/dev/null)
+  echo "Hostname: ${hostname:-N/A}"
+
+  # Get External IP
+  external_ip=$(curl -s https://ipinfo.io/ip)
+  echo "External IP: ${external_ip:-N/A}"
+done
+
+# Add explicit handling for Tailscale using the Tailscale CLI
+if [ -x "$TAILSCALE_CLI" ]; then
+  echo "----------------------------------------"
+  echo "Adapter Name: Tailscale"
+  
+  # Get Tailscale IP addresses
+  tailscale_ips=$($TAILSCALE_CLI ip)
+  echo "Tailscale IPs:"
+  echo "$tailscale_ips"
+  
+  # Get Tailscale status
+  echo "Tailscale Peers:"
+  tailscale_status=$($TAILSCALE_CLI status | tail -n +2 | awk '{printf "  %-15s %-20s %-10s %-10s\n", $1, $2, $4, $5}')
+  echo "$tailscale_status"
+
+  # Display Tailscale-specific routing/DNS information
+  echo "Subnet Mask: Managed by Tailscale"
+  echo "Router: Managed by Tailscale"
+  echo "DNS Servers: Managed by Tailscale"
+  
+  # Get External IP (optional)
+  external_ip=$(curl -s https://ipinfo.io/ip)
+  echo "External IP: ${external_ip:-N/A}"
+else
+  echo "Tailscale CLI not found at $TAILSCALE_CLI. Skipping Tailscale details."
+fi
+
+echo "----------------------------------------"
+echo "====== End of Summary ======"

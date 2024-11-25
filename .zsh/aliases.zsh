@@ -23,6 +23,9 @@ alias gl="git log --oneline --graph --decorate"
 # Networking Aliases
 alias ports="netstat -tulanp"
 alias myip="curl ifconfig.me"
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+
+
 
 # Python Virtual Environment Aliases
 alias _venv="source python/bin/activate"
