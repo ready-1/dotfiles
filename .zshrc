@@ -1,1 +1,1 @@
-.config/yadm/alt/.zshrc##os.Darwin
+.config/yadm/alt/.zshrc##os.Linux
