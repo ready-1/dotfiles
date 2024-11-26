@@ -1,0 +1,234 @@
+#!/bin/bash
+
+# Ensure dialog uses custom color configuration
+export DIALOGRC="${HOME}/.dialogrc"
+
+# Check if dialog is installed
+if ! command -v dialog &> /dev/null; then
+    echo "Error: 'dialog' is not installed. Install it using your package manager."
+    exit 1
+fi
+
+# Function to display the main menu
+main_menu() {
+    dialog --clear --colors --title "\Zb\Z7Dotfiles Manager (dotman)" \
+    --menu "\Z4Choose an option:" 20 60 11 \
+    1 "yadm status" \
+    2 "yadm add" \
+    3 "yadm commit" \
+    4 "yadm push" \
+    5 "yadm pull" \
+    6 "Rebase Options" \
+    7 "View Commit Logs" \
+    8 "View File History" \
+    9 "View Uncommitted Changes (yadm diff)" \
+    10 "Create Alt-File Entry" \
+    Q "Quit" 2>menu_choice.txt
+
+    choice=$(<menu_choice.txt)
+    case "$choice" in
+        1) yadm_status ;;
+        2) yadm_add ;;
+        3) yadm_commit ;;
+        4) yadm_push ;;
+        5) yadm_pull ;;
+        6) rebase_menu ;;
+        7) view_logs ;;
+        8) view_file_history ;;
+        9) view_diff ;;
+        10) create_alt_file ;;
+        Q) cleanup_and_exit ;;
+        *) cleanup_and_exit ;;
+    esac
+}
+
+# Function for yadm status
+yadm_status() {
+    temp_file=$(mktemp)
+    yadm status > "$temp_file" 2>&1
+    dialog --colors --title "\Zb\Z7yadm status" --textbox "$temp_file" 20 70
+    rm -f "$temp_file"
+    main_menu
+}
+
+# Function for yadm add
+yadm_add() {
+    dialog --colors --title "\Zb\Z7yadm add" --inputbox "Enter file(s) to add:" 10 50 2>add_files.txt
+    files=$(<add_files.txt)
+    if [[ -n $files ]]; then
+        temp_file=$(mktemp)
+        yadm add $files > "$temp_file" 2>&1
+        dialog --colors --title "\Zb\Z7yadm add output" --textbox "$temp_file" 20 70
+        rm -f "$temp_file"
+    else
+        dialog --colors --msgbox "\Z1No files were provided!" 8 40
+    fi
+    main_menu
+}
+
+# Function for yadm commit
+yadm_commit() {
+    dialog --colors --title "\Zb\Z7yadm commit" --inputbox "Enter commit message:" 10 50 2>commit_message.txt
+    message=$(<commit_message.txt)
+    if [[ -n $message ]]; then
+        temp_file=$(mktemp)
+        yadm commit -m "$message" > "$temp_file" 2>&1
+        dialog --colors --title "\Zb\Z7yadm commit output" --textbox "$temp_file" 20 70
+        rm -f "$temp_file"
+    else
+        dialog --colors --msgbox "\Z1Commit message cannot be empty!" 8 40
+    fi
+    main_menu
+}
+
+# Function for yadm push
+yadm_push() {
+    dialog --colors --yesno "\Zb\Z4Are you sure you want to push your changes?" 10 50
+    if [[ $? -eq 0 ]]; then
+        temp_file=$(mktemp)
+        yadm push > "$temp_file" 2>&1
+        dialog --colors --title "\Zb\Z7yadm push output" --textbox "$temp_file" 20 70
+        rm -f "$temp_file"
+    else
+        dialog --colors --msgbox "\Z1Push operation canceled." 8 40
+    fi
+    main_menu
+}
+
+# Function for yadm pull
+yadm_pull() {
+    dialog --colors --yesno "\Zb\Z4Are you sure you want to pull changes from the remote repository?" 10 50
+    if [[ $? -eq 0 ]]; then
+        temp_file=$(mktemp)
+        yadm pull > "$temp_file" 2>&1
+        dialog --colors --title "\Zb\Z7yadm pull output" --textbox "$temp_file" 20 70
+        rm -f "$temp_file"
+    else
+        dialog --colors --msgbox "\Z1Pull operation canceled." 8 40
+    fi
+    main_menu
+}
+
+# Sub-menu for rebase options
+rebase_menu() {
+    dialog --clear --colors --title "\Zb\Z7Rebase Options" \
+    --menu "\Z4Choose an option:" 15 50 6 \
+    1 "yadm rebase --continue" \
+    2 "yadm rebase --abort" \
+    3 "yadm rebase --skip" \
+    4 "yadm rebase -i (Interactive Rebase)" \
+    B "Back to Main Menu" 2>rebase_choice.txt
+
+    rebase_choice=$(<rebase_choice.txt)
+    case "$rebase_choice" in
+        1) yadm_rebase_continue ;;
+        2) yadm_rebase_abort ;;
+        3) yadm_rebase_skip ;;
+        4) interactive_rebase ;;
+        B) main_menu ;;
+        *) main_menu ;;
+    esac
+}
+
+# Rebase commands
+yadm_rebase_continue() {
+    temp_file=$(mktemp)
+    yadm rebase --continue > "$temp_file" 2>&1
+    dialog --colors --title "\Zb\Z7Rebase Continue" --textbox "$temp_file" 20 70
+    rm -f "$temp_file"
+    rebase_menu
+}
+
+yadm_rebase_abort() {
+    temp_file=$(mktemp)
+    yadm rebase --abort > "$temp_file" 2>&1
+    dialog --colors --title "\Zb\Z7Rebase Abort" --textbox "$temp_file" 20 70
+    rm -f "$temp_file"
+    rebase_menu
+}
+
+yadm_rebase_skip() {
+    temp_file=$(mktemp)
+    yadm rebase --skip > "$temp_file" 2>&1
+    dialog --colors --title "\Zb\Z7Rebase Skip" --textbox "$temp_file" 20 70
+    rm -f "$temp_file"
+    rebase_menu
+}
+
+# Function for interactive rebase
+interactive_rebase() {
+    dialog --colors --title "\Zb\Z7Interactive Rebase" --inputbox "Enter the base commit (or leave blank for HEAD):" 10 50 2>base_commit.txt
+    base_commit=$(<base_commit.txt)
+    if [[ -n $base_commit ]]; then
+        yadm rebase -i "$base_commit"
+    else
+        yadm rebase -i
+    fi
+    dialog --colors --msgbox "\Z4Interactive rebase completed or exited." 10 50
+    rebase_menu
+}
+
+# Function to view commit logs
+view_logs() {
+    temp_file=$(mktemp)
+    yadm log --oneline > "$temp_file" 2>&1
+    dialog --colors --title "\Zb\Z7Recent Commits" --textbox "$temp_file" 20 70
+    rm -f "$temp_file"
+    main_menu
+}
+
+# Function to view file history
+view_file_history() {
+    dialog --colors --title "\Zb\Z7File History" --inputbox "Enter the file path to view history:" 10 50 2>file_history.txt
+    file=$(<file_history.txt)
+    if [[ -n $file ]]; then
+        temp_file=$(mktemp)
+        yadm log -- "$file" > "$temp_file" 2>&1
+        dialog --colors --title "\Zb\Z7History for $file" --textbox "$temp_file" 20 70
+        rm -f "$temp_file"
+    else
+        dialog --colors --msgbox "\Z1No file path provided!" 8 40
+    fi
+    main_menu
+}
+
+# Function to view uncommitted changes
+view_diff() {
+    temp_file=$(mktemp)
+    yadm diff > "$temp_file" 2>&1
+    dialog --colors --title "\Zb\Z7Uncommitted Changes" --textbox "$temp_file" 20 70
+    rm -f "$temp_file"
+    main_menu
+}
+
+# Function to create an alt-file entry
+create_alt_file() {
+    os_suffix=$(uname -s)
+    case "$os_suffix" in
+        Darwin) suffix="##os.Darwin" ;;
+        Linux) suffix="##os.Linux" ;;
+        *) suffix="##os.Unknown" ;;
+    esac
+
+    dialog --colors --title "\Zb\Z7Create Alt-File Entry" --inputbox "Enter the filename (relative to home):" 10 50 2>filename.txt
+    file=$(<filename.txt)
+    if [[ -n $file ]]; then
+        mkdir -p ~/.config/yadm/alt/
+        alt_file="~/.config/yadm/alt/${file}${suffix}"
+        touch ${alt_file/#\~/$HOME}
+        dialog --colors --msgbox "\Zb\Z2Alt file created:\n${alt_file}" 10 50
+    else
+        dialog --colors --msgbox "\Z1No filename provided!" 8 40
+    fi
+    main_menu
+}
+
+# Cleanup and exit
+cleanup_and_exit() {
+    rm -f menu_choice.txt add_files.txt commit_message.txt rebase_choice.txt file_history.txt base_commit.txt
+    clear
+    exit 0
+}
+
+# Start the main menu
+main_menu
