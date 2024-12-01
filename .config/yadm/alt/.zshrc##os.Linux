@@ -68,5 +68,6 @@ bashcompinit
 
 eval "$(register-python-argcomplete pipx)"
 
-
+# direnv
+eval "$(direnv hook zsh)"
 
